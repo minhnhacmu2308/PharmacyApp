@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { postLogin } from "../../services/authentication/authentication.service";
 import { Route, withRouter, Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class login extends Component {
   constructor(props) {
@@ -11,33 +13,29 @@ class login extends Component {
       notice: "",
     };
   }
-  componentDidMount = async () => {};
+  notify = (text) => toast.success(text);
+  notifyErr = (text) => toast.error(text);
   onSubmit = async () => {
     const data = {
       userName: this.state.userName,
       password: this.state.password,
     };
-    const result = await postLogin(data);
-    if (result.success) {
-      localStorage.setItem("token", result.data.secret_key);
-      this.props.history.push("/");
+    if (this.state.userName === "" || this.state.password === "") {
+      this.notifyErr("You need fill out information");
     } else {
-      console.log(result);
-      this.setState({
-        notice: result.errors.message,
-      });
-      if (result.errors.message != null) {
-        this.setState({
-          notice: result.errors.message,
-        });
-      } else if (result.errors.password.message != null) {
-        this.setState({
-          notice: result.errors.password.message,
-        });
+      const result = await postLogin(data);
+      if (result.success) {
+        localStorage.setItem("token", result.data.secret_key);
+        this.notify("Login succesfully");
+        this.props.history.push("/");
       } else {
-        this.setState({
-          notice: result.errors.userName.message,
-        });
+        if (result.errors.message != null) {
+          this.notifyErr(result.errors.message);
+        } else if (result.errors.password.message != null) {
+          this.notifyErr(result.errors.password.message);
+        } else {
+          this.notifyErr(result.errors.userName.message);
+        }
       }
     }
   };
@@ -48,6 +46,7 @@ class login extends Component {
     }
     return (
       <body className="bg-primary">
+        <ToastContainer />
         <div id="layoutAuthentication">
           <div id="layoutAuthentication_content">
             <main>

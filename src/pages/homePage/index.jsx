@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Route, withRouter, Redirect } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class home extends Component {
   constructor(props) {
@@ -19,6 +21,7 @@ class home extends Component {
     }
     return (
       <main>
+        <ToastContainer />
         <ol class="breadcrumb mb-4">
           <li class="breadcrumb-item active"></li>
         </ol>

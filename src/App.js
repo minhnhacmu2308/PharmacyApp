@@ -6,6 +6,8 @@ import { Router, Switch } from "react-router-dom";
 import HomePage from "../src/pages/homePage/index";
 import Login from "../src/pages/login/index";
 import EmployeePage from "./pages/employeePage/index";
+import CustomerPage from "./pages/customerPage/index";
+import PackagePage from "./pages/packagePage/index";
 import DefaultLayout from "../src/layouts/DefaultLayout";
 class App extends Component {
   constructor(props) {
@@ -22,7 +24,9 @@ class App extends Component {
           {/* <FullLayout exact path="/login" component={LoginPage} />
         <FullLayout exact path="/register" component={RegisterPage} /> */}
           <DefaultLayout exact path="/" component={HomePage} />
+          <DefaultLayout exact path="/package" component={PackagePage} />
           <DefaultLayout exact path="/employee" component={EmployeePage} />
+          <DefaultLayout exact path="/customer" component={CustomerPage} />
         </Switch>
       </Router>
     );

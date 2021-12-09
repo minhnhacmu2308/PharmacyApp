@@ -13,12 +13,24 @@ class index extends Component {
             <div className="nav">
               <div className="sb-sidenav-menu-heading">Core</div>
 
-              <a href="/employee" className="nav-link">
+              <Link to="/employee" className="nav-link">
                 <div className="sb-nav-link-icon">
                   <i className="fas fa-tachometer-alt"></i>
                 </div>
                 Manage Employee
-              </a>
+              </Link>
+              <Link to="/customer" className="nav-link">
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-tachometer-alt"></i>
+                </div>
+                Manage Customer
+              </Link>
+              <Link to="/package" className="nav-link">
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-tachometer-alt"></i>
+                </div>
+                Manage Package
+              </Link>
               <div className="sb-sidenav-menu-heading">Interface</div>
               <a
                 className="nav-link collapsed"

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Route, withRouter, Redirect, Link } from "react-router-dom";
-import { getAll, getEmployee } from "../../services/employee/employee.service";
+import {
+  getAll,
+  getEmployee,
+  getCustomer,
+} from "../../services/employee/employee.service";
 import AddForm from "./addForm";
 import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +27,7 @@ class index extends Component {
   }
   componentDidMount = async () => {
     const token = await localStorage.getItem("token");
-    const result = await getEmployee();
+    const result = await getCustomer();
     console.log(result);
     if (result != null) {
       this.setState({ datatable: result.data, isLoading: false });
@@ -36,11 +40,11 @@ class index extends Component {
     var datatable = this.state.datatable;
     console.log(data);
     if (data.success == true) {
-      this.notify("Create account employee successfully");
+      this.notify("Create account customer successfully");
       this.setState({ datatable: [...datatable, data.data] });
     }
     if (data.status == true) {
-      this.notify("Update account employee successfully");
+      this.notify("Update account customer successfully");
       var index = await this.findIndex(data.data._id);
       console.log(index);
       datatable[index] = data.data;
@@ -95,16 +99,13 @@ class index extends Component {
     return (
       <main>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Management Employee</h1>
+          <h1 className="mt-4">Management Customer</h1>
           <ToastContainer />
           <div className="card mb-4">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th class="text-center">STT</th>
-                  <th class="text-center" width="100px">
-                    UserName
-                  </th>
                   <th class="text-center">FullName</th>
                   <th class="text-center">Email</th>
                   <th class="text-center">Phone Number</th>
@@ -113,12 +114,8 @@ class index extends Component {
                   </th>
                   {/* <th class="text-center">IdCard</th> */}
                   <th class="text-center">Gender</th>
-                  <th width="400px" class="text-center">
-                    Status
-                  </th>
-                  <th width="500px" class="text-center">
-                    Status Action
-                  </th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Status Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,8 +138,8 @@ class index extends Component {
                     <div>
                       <ReactLoading
                         color="primary"
-                        height={"70%"}
-                        width={"70%"}
+                        height={"40%"}
+                        width={"40%"}
                       />
                     </div>
                   </tr>
@@ -151,7 +148,6 @@ class index extends Component {
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td style={{ width: 50 }}>{value.userName}</td>
                         <td>{value.fullName}</td>
                         <td>{value.email}</td>
                         <td>{value.phonenumber}</td>

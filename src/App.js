@@ -8,6 +8,7 @@ import Login from "../src/pages/login/index";
 import EmployeePage from "./pages/employeePage/index";
 import CustomerPage from "./pages/customerPage/index";
 import PackagePage from "./pages/packagePage/index";
+import GroupPage from "./pages/groupPage/index";
 import DefaultLayout from "../src/layouts/DefaultLayout";
 class App extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class App extends Component {
           <DefaultLayout exact path="/package" component={PackagePage} />
           <DefaultLayout exact path="/employee" component={EmployeePage} />
           <DefaultLayout exact path="/customer" component={CustomerPage} />
+          <DefaultLayout exact path="/group" component={GroupPage} />
         </Switch>
       </Router>
     );

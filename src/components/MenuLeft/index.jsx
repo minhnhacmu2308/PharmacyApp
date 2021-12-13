@@ -35,7 +35,7 @@ class index extends Component {
                 <div className="sb-nav-link-icon">
                   <i className="fas fa-tachometer-alt"></i>
                 </div>
-                Manage Group 
+                Manage Group
               </Link>
               <div className="sb-sidenav-menu-heading">Interface</div>
               <a
@@ -49,7 +49,7 @@ class index extends Component {
                 <div className="sb-nav-link-icon">
                   <i className="fas fa-columns"></i>
                 </div>
-                Layouts
+                Medicine
                 <div className="sb-sidenav-collapse-arrow">
                   <i className="fas fa-angle-down"></i>
                 </div>
@@ -61,12 +61,12 @@ class index extends Component {
                 data-bs-parent="#sidenavAccordion"
               >
                 <nav className="sb-sidenav-menu-nested nav">
-                  <a className="nav-link" href="layout-static.html">
-                    Static Navigation
-                  </a>
-                  <a className="nav-link" href="layout-sidenav-light.html">
-                    Light Sidenav
-                  </a>
+                  <Link className="nav-link" to="/medicine">
+                    Manage medicine
+                  </Link>
+                  <Link className="nav-link" to="/mdc-packaging-size">
+                    Manage mdc packaging size
+                  </Link>
                 </nav>
               </div>
               <a

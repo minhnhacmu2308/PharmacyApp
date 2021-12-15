@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CKEditor from "react-ckeditor-component";
 import { getAll } from "../../services/groupMdc/groupMdc.service";
-import { add } from "../../services/medicine/medicine.service";
+import { add, update } from "../../services/medicine/medicine.service";
 import { ToastContainer, toast } from "react-toastify";
 
 class medicineform extends Component {
@@ -11,6 +11,7 @@ class medicineform extends Component {
       name: "",
       image: "",
       origin: "",
+      imageShow: "",
       description: "",
       idGroup: "",
       id: "",
@@ -23,6 +24,21 @@ class medicineform extends Component {
     this.setState({
       listGroup: listGroup,
     });
+  };
+  componentWillReceiveProps = async (nextProps) => {
+    console.log(nextProps.medicine._id);
+    if (nextProps && nextProps.medicine._id != undefined) {
+      const token = await localStorage.getItem("token");
+      this.setState({ token: token });
+      this.setState({
+        description: nextProps.medicine.description,
+        name: nextProps.medicine.name,
+        origin: nextProps.medicine.origin,
+        imageShow: nextProps.medicine.image,
+        idGroup: nextProps.medicine.groupMedicines.idGroup,
+        id: nextProps.medicine._id,
+      });
+    }
   };
   notify = (text) => toast.success(text);
   notifyErr = (text) => toast.error(text);
@@ -50,17 +66,30 @@ class medicineform extends Component {
       }
     }
   };
-  onUpdate = async () => {
+  onUpdate = async (e) => {
+    e.preventDefault();
     var { name, origin, description, idGroup } = this.state;
     if (name == "" || origin == "" || idGroup == "" || description == "") {
       this.notifyErr("You need fill out information");
     } else {
-      const data = {
-        name: this.state.name,
-        description: this.state.description,
-        idGroup: this.state.idGroup,
-        origin: this.state.origin,
-      };
+      const formData = new FormData();
+      formData.append("image", this.state.image);
+      formData.append("idMedicine", this.state.id);
+      formData.append("origin", this.state.origin);
+      formData.append("secret_key", this.state.token);
+      formData.append("description", this.state.description);
+      formData.append("name", this.state.name);
+      formData.append("idGroup", this.state.idGroup);
+      const result = await update(formData);
+      console.log(result);
+      if (result.status == true) {
+        this.onClear();
+        this.props.onEdit(result);
+      } else if (result.success == false) {
+        this.notifyErr(result.messages);
+      } else if (result.errors !== null) {
+        this.notifyErr("Invalid");
+      }
     }
   };
   updateContent = (newContent) => {
@@ -68,7 +97,16 @@ class medicineform extends Component {
       description: newContent,
     });
   };
-
+  onClear = () => {
+    this.setState({
+      description: "",
+      name: "",
+      id: "",
+      origin: "",
+      idGroup: "",
+      imageShow: "",
+    });
+  };
   onChange = (evt) => {
     var newContent = evt.editor.getData();
     this.setState({
@@ -93,56 +131,57 @@ class medicineform extends Component {
           >
             <div className="row">
               <div className="col-md-6">
-                {this.state.id === "" ? (
-                  <div className="form-group">
-                    <label for="exampleFormControlInput1">
-                      Name: <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="name"
-                      value={this.state.name}
-                      onChange={(e) => this.setState({ name: e.target.value })}
-                    />
-                  </div>
-                ) : null}
-                {this.state.id === "" ? (
-                  <div className="form-group">
-                    <label for="exampleFormControlInput1">
-                      Origin:<span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="origin"
-                      value={this.state.origin}
-                      onChange={(e) =>
-                        this.setState({ origin: e.target.value })
-                      }
-                    />
-                  </div>
-                ) : null}
+                <div className="form-group">
+                  <label for="exampleFormControlInput1">
+                    Name: <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="name"
+                    value={this.state.name}
+                    onChange={(e) => this.setState({ name: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="exampleFormControlInput1">
+                    Origin:<span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="origin"
+                    value={this.state.origin}
+                    onChange={(e) => this.setState({ origin: e.target.value })}
+                  />
+                </div>
               </div>
               <div className="col-md-6">
-                  <div className="form-group">
-                    <label for="exampleFormControlInput1">
-                      Image: <span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="password"
-                      name="file"
-                      onChange={(e) =>
-                        this.setState({ image: e.target.files[0] })
-                      }
+                <div className="form-group">
+                  <label for="exampleFormControlInput1">
+                    Image: <span style={{ color: "red" }}>*</span>
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="password"
+                    name="file"
+                    onChange={(e) =>
+                      this.setState({ image: e.target.files[0] })
+                    }
+                  />
+                  {this.state.imageShow != "" ? (
+                    <img
+                      style={{ marginTop: 10 }}
+                      src={this.state.imageShow}
+                      width="100"
+                      height="100"
                     />
-                  </div>
-                
+                  ) : null}
+                </div>
 
                 <div className="form-group">
                   <label for="exampleFormControlInput1">
@@ -184,6 +223,7 @@ class medicineform extends Component {
                     style={{ width: "90px" }}
                     type="button"
                     class="btn btn-danger"
+                    onClick={() => this.onClear()}
                   >
                     Cancel
                   </button>

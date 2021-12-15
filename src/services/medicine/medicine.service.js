@@ -16,6 +16,12 @@ export const add = async (payload) => {
   const response = await axios.post(`${URL}/admin/medicines/add`, payload);
   return response.data;
 };
+
+export const update = async (payload) => {
+  const response = await axios.post(`${URL}/admin/medicines/update`, payload);
+  return response.data;
+};
+
 export const deleteMedicine = async (payload) => {
   const response = await axios.post(`${URL}/admin/medicines/delete`, payload);
   return response.data;

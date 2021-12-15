@@ -40,12 +40,21 @@ class index extends Component {
       this.setState({ datatable: [...datatable, data.data] });
     }
     if (data.status == true) {
-      this.notify("Update medicine employee successfully");
+      this.notify("Update medicine  successfully");
       var index = await this.findIndex(data.data._id);
       console.log(index);
       datatable[index] = data.data;
       this.setState({ datatable: datatable });
     }
+  };
+  onEdit = async (data) => {
+    var datatable = this.state.datatable;
+    this.notify("Update medicine employee successfully");
+    var index = await this.findIndex(data._id);
+    console.log(index);
+    datatable[index] = data;
+    this.setState({ datatable: datatable });
+    
   };
   onDelete = async (id) => {
     const data = {
@@ -65,6 +74,21 @@ class index extends Component {
   onDetail = async (id) => {
     const result = await getMedicine(id);
     console.log(result);
+  };
+  findIndex = (id) => {
+    var { datatable } = this.state;
+    var result = -1;
+    datatable.forEach((value, index) => {
+      if (value._id === id) {
+        result = index;
+      }
+    });
+    return result;
+  };
+  onUpdate = async (id) => {
+    const index = await this.findIndex(id);
+    console.log(this.state.datatable[index]);
+    this.setState({ editing: this.state.datatable[index] });
   };
   render() {
     return (
@@ -168,6 +192,7 @@ class index extends Component {
             <MedicineForm
               medicine={this.state.editing}
               onSubmit={this.onSubmit}
+              onEdit={this.onEdit}
             />
           </div>
         </div>

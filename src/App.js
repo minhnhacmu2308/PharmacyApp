@@ -12,6 +12,10 @@ import GroupPage from "./pages/groupPage/index";
 import MedicinePage from "./pages/medicinePage/index";
 import DetailMedicinePage from "./pages/medicinePage/detail";
 import MdcPackagingPage from "./pages/mdcPackagingSizePage/index";
+import InvoicesBuyPage from "./pages/invoicesBuyPage/index";
+import InvoicesSellPage from "./pages/invoicesSellPage/index";
+import DetailInvoicesBuyPabe from "./pages/invoicesBuyPage/detail";
+import DetailInvoicesSellPage from "./pages/invoicesSellPage/detail";
 import DefaultLayout from "../src/layouts/DefaultLayout";
 
 class App extends Component {
@@ -33,6 +37,26 @@ class App extends Component {
           <DefaultLayout exact path="/employee" component={EmployeePage} />
           <DefaultLayout exact path="/medicine" component={MedicinePage} />
           <DefaultLayout exact path="/customer" component={CustomerPage} />
+          <DefaultLayout
+            exact
+            path="/invoices-buy"
+            component={InvoicesBuyPage}
+          />
+          <DefaultLayout
+            exact
+            path="/invoices-sell"
+            component={InvoicesSellPage}
+          />
+          <DefaultLayout
+            exact
+            path="/detail-invoices-sell/:id"
+            component={DetailInvoicesSellPage}
+          />
+          <DefaultLayout
+            exact
+            path="/detail-invoices/:id"
+            component={DetailInvoicesBuyPabe}
+          />
           <DefaultLayout
             exact
             path="/detail-medicine/:id"

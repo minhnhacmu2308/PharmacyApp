@@ -2,7 +2,7 @@ import axios from "axios";
 
 const URL = "https://pharmacy-server-app.herokuapp.com";
 
-export const getAll = async () => {
+export const getAllInvoices = async () => {
   const response = await axios.get(`${URL}/admin/invoices-buy/list`);
   return response.data;
 };

@@ -9,6 +9,7 @@ import EmployeePage from "./pages/employeePage/index";
 import CustomerPage from "./pages/customerPage/index";
 import PackagePage from "./pages/packagePage/index";
 import GroupPage from "./pages/groupPage/index";
+import PrescriptionPage from "./pages/prescriptionPage/index";
 import MedicinePage from "./pages/medicinePage/index";
 import DetailMedicinePage from "./pages/medicinePage/detail";
 import MdcPackagingPage from "./pages/mdcPackagingSizePage/index";
@@ -33,6 +34,7 @@ class App extends Component {
           <DefaultLayout exact path="/employee" component={EmployeePage} />
           <DefaultLayout exact path="/medicine" component={MedicinePage} />
           <DefaultLayout exact path="/customer" component={CustomerPage} />
+          <DefaultLayout exact path="/prescription" component={PrescriptionPage} />
           <DefaultLayout
             exact
             path="/detail-medicine/:id"

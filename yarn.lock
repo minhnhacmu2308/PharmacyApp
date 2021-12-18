@@ -2961,6 +2961,15 @@
   dependencies:
     "babylon" "^6.18.0"
 
+"babel-helper-builder-react-jsx@^6.24.1":
+  "integrity" "sha1-Of+DE7dci2Xc7/HzHTg+D/KkCKA="
+  "resolved" "https://registry.npmjs.org/babel-helper-builder-react-jsx/-/babel-helper-builder-react-jsx-6.26.0.tgz"
+  "version" "6.26.0"
+  dependencies:
+    "babel-runtime" "^6.26.0"
+    "babel-types" "^6.26.0"
+    "esutils" "^2.0.2"
+
 "babel-jest@^26.6.0", "babel-jest@^26.6.3":
   "integrity" "sha512-pl4Q+GAVOHwvjrck6jKjvmGhnO3jHX/xuB9d27f+EJZ/6k+6nMuPjorrYp7s++bKKdANwzElBWnLWaObvTnaZA=="
   "resolved" "https://registry.npmjs.org/babel-jest/-/babel-jest-26.6.3.tgz"
@@ -3052,10 +3061,28 @@
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.3.0"
 
+"babel-plugin-syntax-flow@^6.18.0":
+  "integrity" "sha1-TDqyCiryaqIM0lmVw5jE63AxDI0="
+  "resolved" "https://registry.npmjs.org/babel-plugin-syntax-flow/-/babel-plugin-syntax-flow-6.18.0.tgz"
+  "version" "6.18.0"
+
+"babel-plugin-syntax-jsx@^6.3.13", "babel-plugin-syntax-jsx@^6.8.0":
+  "integrity" "sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY="
+  "resolved" "https://registry.npmjs.org/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz"
+  "version" "6.18.0"
+
 "babel-plugin-syntax-object-rest-spread@^6.8.0":
   "integrity" "sha1-/WU28rzhODb/o6VFjEkDpZe7O/U="
   "resolved" "https://registry.npmjs.org/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-6.13.0.tgz"
   "version" "6.13.0"
+
+"babel-plugin-transform-flow-strip-types@^6.22.0":
+  "integrity" "sha1-hMtnKTXUNxT9wyvOhFaNh0Qc988="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-flow-strip-types/-/babel-plugin-transform-flow-strip-types-6.22.0.tgz"
+  "version" "6.22.0"
+  dependencies:
+    "babel-plugin-syntax-flow" "^6.18.0"
+    "babel-runtime" "^6.22.0"
 
 "babel-plugin-transform-object-rest-spread@^6.26.0":
   "integrity" "sha1-DzZpLVD+9rfi1LOsFHgTepY7ewY="
@@ -3065,10 +3092,49 @@
     "babel-plugin-syntax-object-rest-spread" "^6.8.0"
     "babel-runtime" "^6.26.0"
 
+"babel-plugin-transform-react-display-name@^6.23.0":
+  "integrity" "sha1-Z+K/Hx6ck6sI25Z5LgU5K/LMKNE="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-react-display-name/-/babel-plugin-transform-react-display-name-6.25.0.tgz"
+  "version" "6.25.0"
+  dependencies:
+    "babel-runtime" "^6.22.0"
+
+"babel-plugin-transform-react-jsx-self@^6.22.0":
+  "integrity" "sha1-322AqdomEqEh5t3XVYvL7PBuY24="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-react-jsx-self/-/babel-plugin-transform-react-jsx-self-6.22.0.tgz"
+  "version" "6.22.0"
+  dependencies:
+    "babel-plugin-syntax-jsx" "^6.8.0"
+    "babel-runtime" "^6.22.0"
+
+"babel-plugin-transform-react-jsx-source@^6.22.0":
+  "integrity" "sha1-ZqwSFT9c0tF7PBkmj0vwGX9E7NY="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-react-jsx-source/-/babel-plugin-transform-react-jsx-source-6.22.0.tgz"
+  "version" "6.22.0"
+  dependencies:
+    "babel-plugin-syntax-jsx" "^6.8.0"
+    "babel-runtime" "^6.22.0"
+
+"babel-plugin-transform-react-jsx@^6.24.1":
+  "integrity" "sha1-hAoCjn30YN/DotKfDA2R9jduZqM="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-react-jsx/-/babel-plugin-transform-react-jsx-6.24.1.tgz"
+  "version" "6.24.1"
+  dependencies:
+    "babel-helper-builder-react-jsx" "^6.24.1"
+    "babel-plugin-syntax-jsx" "^6.8.0"
+    "babel-runtime" "^6.22.0"
+
 "babel-plugin-transform-react-remove-prop-types@0.4.24":
   "integrity" "sha512-eqj0hVcJUR57/Ug2zE1Yswsw4LhuqqHhD+8v120T1cl3kjg76QwtyBrdIk4WVwK+lAhBJVYCd/v+4nc4y+8JsA=="
   "resolved" "https://registry.npmjs.org/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.24.tgz"
   "version" "0.4.24"
+
+"babel-plugin-transform-runtime@^6.23.0":
+  "integrity" "sha1-iEkNRGUC6puOfvsP4J7E2ZR5se4="
+  "resolved" "https://registry.npmjs.org/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.23.0.tgz"
+  "version" "6.23.0"
+  dependencies:
+    "babel-runtime" "^6.22.0"
 
 "babel-preset-current-node-syntax@^1.0.0":
   "integrity" "sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ=="
@@ -3087,6 +3153,13 @@
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
     "@babel/plugin-syntax-optional-chaining" "^7.8.3"
     "@babel/plugin-syntax-top-level-await" "^7.8.3"
+
+"babel-preset-flow@^6.23.0":
+  "integrity" "sha1-5xIYiHCFrpoktb5Baa/7WZgWxJ0="
+  "resolved" "https://registry.npmjs.org/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz"
+  "version" "6.23.0"
+  dependencies:
+    "babel-plugin-transform-flow-strip-types" "^6.22.0"
 
 "babel-preset-jest@^26.6.2":
   "integrity" "sha512-YvdtlVm9t3k777c5NPQIv6cxFFFapys25HiUmuSgHwIZhfifweR5c5Sf5nwE3MAbfu327CYSvps8Yx6ANLyleQ=="
@@ -3117,13 +3190,35 @@
     "babel-plugin-macros" "2.8.0"
     "babel-plugin-transform-react-remove-prop-types" "0.4.24"
 
-"babel-runtime@^6.26.0":
+"babel-preset-react@^6.16.0":
+  "integrity" "sha1-umnfrqRfw+xjm2pOzqbhdwLJE4A="
+  "resolved" "https://registry.npmjs.org/babel-preset-react/-/babel-preset-react-6.24.1.tgz"
+  "version" "6.24.1"
+  dependencies:
+    "babel-plugin-syntax-jsx" "^6.3.13"
+    "babel-plugin-transform-react-display-name" "^6.23.0"
+    "babel-plugin-transform-react-jsx" "^6.24.1"
+    "babel-plugin-transform-react-jsx-self" "^6.22.0"
+    "babel-plugin-transform-react-jsx-source" "^6.22.0"
+    "babel-preset-flow" "^6.23.0"
+
+"babel-runtime@^6.11.6", "babel-runtime@^6.22.0", "babel-runtime@^6.26.0":
   "integrity" "sha1-llxwWGaOgrVde/4E/yM3vItWR/4="
   "resolved" "https://registry.npmjs.org/babel-runtime/-/babel-runtime-6.26.0.tgz"
   "version" "6.26.0"
   dependencies:
     "core-js" "^2.4.0"
     "regenerator-runtime" "^0.11.0"
+
+"babel-types@^6.26.0":
+  "integrity" "sha1-o7Bz+Uq0nrb6Vc1lInozQ4BjJJc="
+  "resolved" "https://registry.npmjs.org/babel-types/-/babel-types-6.26.0.tgz"
+  "version" "6.26.0"
+  dependencies:
+    "babel-runtime" "^6.26.0"
+    "esutils" "^2.0.2"
+    "lodash" "^4.17.4"
+    "to-fast-properties" "^1.0.3"
 
 "babylon@^6.18.0":
   "integrity" "sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ=="
@@ -5632,6 +5727,11 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^3.0.0"
 
+"file-uri-to-path@1.0.0":
+  "integrity" "sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw=="
+  "resolved" "https://registry.npmjs.org/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz"
+  "version" "1.0.0"
+
 "filesize@6.1.0":
   "integrity" "sha512-LpCHtPQ3sFx67z+uh2HnSyWSLLu5Jxo21795uRDuar/EOuYWXib5EmPaGIBuSnRqH2IODiKA2k5re/K9OnN/Yg=="
   "resolved" "https://registry.npmjs.org/filesize/-/filesize-6.1.0.tgz"
@@ -7796,6 +7896,11 @@
   "integrity" "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg=="
   "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   "version" "1.2.4"
+
+"load-script@^1.0.0":
+  "integrity" "sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ="
+  "resolved" "https://registry.npmjs.org/load-script/-/load-script-1.0.0.tgz"
+  "version" "1.0.0"
 
 "loader-runner@^2.4.0":
   "integrity" "sha512-Jsmr89RcXGIwivFY21FcRrisYZfvLMTWx5kOLc+JTxtpBOG6xML0vzbc6SEQG2FO9/4Fc3wW4LVcB5DmGflaRw=="
@@ -10095,6 +10200,16 @@
     "lodash" "^4.17.4"
     "prop-types" "^15.5.8"
 
+"react-ckeditor-component@^1.1.0":
+  "integrity" "sha512-dcptPsMKRDGvAGxokwdVDKPgZbTgwngknaQVD+SDTV6XSw57J6LD7cRaqEo6WGLwMZh39Up37fdJjugNd6vEAA=="
+  "resolved" "https://registry.npmjs.org/react-ckeditor-component/-/react-ckeditor-component-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "babel-plugin-transform-runtime" "^6.23.0"
+    "babel-preset-react" "^6.16.0"
+    "babel-runtime" "^6.11.6"
+    "load-script" "^1.0.0"
+
 "react-dev-utils@^11.0.3":
   "integrity" "sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-11.0.4.tgz"
@@ -11912,6 +12027,11 @@
   "integrity" "sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M="
   "resolved" "https://registry.npmjs.org/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz"
   "version" "1.0.1"
+
+"to-fast-properties@^1.0.3":
+  "integrity" "sha1-uDVx+k2MJbguIxsG46MFXeTKGkc="
+  "resolved" "https://registry.npmjs.org/to-fast-properties/-/to-fast-properties-1.0.3.tgz"
+  "version" "1.0.3"
 
 "to-fast-properties@^2.0.0":
   "integrity" "sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4="

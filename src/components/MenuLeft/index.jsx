@@ -37,6 +37,12 @@ class index extends Component {
                 </div>
                 Manage Group
               </Link>
+              <Link to="/prescription" className="nav-link">
+                <div className="sb-nav-link-icon">
+                  <i className="fas fa-tachometer-alt"></i>
+                </div>
+                Manage Prescription
+              </Link>
               <div className="sb-sidenav-menu-heading">Interface</div>
               <a
                 className="nav-link collapsed"

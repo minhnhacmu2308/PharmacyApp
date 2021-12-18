@@ -100,24 +100,13 @@ class index extends Component {
                   </Link>
                 </nav>
               </div>
-              <div className="sb-sidenav-menu-heading">Addons</div>
-              <a className="nav-link" href="charts.html">
+              <Link to="/prescription" className="nav-link">
                 <div className="sb-nav-link-icon">
-                  <i className="fas fa-chart-area"></i>
+                  <i className="fas fa-tachometer-alt"></i>
                 </div>
-                Charts
-              </a>
-              <a className="nav-link" href="tables.html">
-                <div className="sb-nav-link-icon">
-                  <i className="fas fa-table"></i>
-                </div>
-                Tables
-              </a>
+                Medicine Prescription
+              </Link>
             </div>
-          </div>
-          <div className="sb-sidenav-footer">
-            <div className="small">Logged in as:</div>
-            Start Bootstrap
           </div>
         </nav>
       </div>

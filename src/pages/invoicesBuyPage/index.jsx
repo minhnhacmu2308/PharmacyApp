@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, withRouter, Redirect, Link } from "react-router-dom";
 import {
-  getAllInvoices,
+  getAllInvoicesBuy,
   deleteInvoicesBuy,
 } from "../../services/invoicesBuy/invoicesbuy.service.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,7 +22,7 @@ class index extends Component {
   }
   componentDidMount = async () => {
     const token = await localStorage.getItem("token");
-    const result = await getAllInvoices();
+    const result = await getAllInvoicesBuy();
     console.log(result);
     if (result != null) {
       this.setState({ datatable: result, isLoading: false });
@@ -141,11 +141,13 @@ class index extends Component {
                         <td>{index + 1}</td>
                         <td style={{ width: 50 }}>{value.employee?.name}</td>
                         <td>
-                          <td style={{ width: 50 }}>{value.datePayment}</td>
+                          <td style={{ width: 50 }}>
+                            {new Date(value.datePayment).toLocaleDateString()}
+                          </td>
                         </td>
 
                         <td>{value.discount}</td>
-                        <td>{value.totalPayment}</td>
+                        <td>{value.totalPayment} VNĐ</td>
                         <td>
                           <Link to={`/detail-invoices/${value._id}`}>
                             Detail

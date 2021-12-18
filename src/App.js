@@ -16,6 +16,7 @@ import InvoicesBuyPage from "./pages/invoicesBuyPage/index";
 import InvoicesSellPage from "./pages/invoicesSellPage/index";
 import DetailInvoicesBuyPabe from "./pages/invoicesBuyPage/detail";
 import DetailInvoicesSellPage from "./pages/invoicesSellPage/detail";
+import PrescriptionPage from "./pages/prescriptionPage/index";
 import DefaultLayout from "../src/layouts/DefaultLayout";
 
 class App extends Component {
@@ -37,6 +38,11 @@ class App extends Component {
           <DefaultLayout exact path="/employee" component={EmployeePage} />
           <DefaultLayout exact path="/medicine" component={MedicinePage} />
           <DefaultLayout exact path="/customer" component={CustomerPage} />
+          <DefaultLayout
+            exact
+            path="/prescription"
+            component={PrescriptionPage}
+          />
           <DefaultLayout
             exact
             path="/invoices-buy"

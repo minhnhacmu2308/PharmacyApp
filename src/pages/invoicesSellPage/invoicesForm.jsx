@@ -33,6 +33,7 @@ class invoicesForm extends Component {
       information: {},
       checkPrescription: "",
       idPrescription: "",
+      nameCustomer: "",
     };
   }
   componentDidMount = async () => {
@@ -58,6 +59,7 @@ class invoicesForm extends Component {
         id: nextProps.editing._id,
         datePayment: nextProps.editing.datePayment,
         voucherCode: nextProps.editing.voucherCode,
+        nameCustomer: nextProps.editing.customer?.name,
       });
     }
   };
@@ -107,6 +109,8 @@ class invoicesForm extends Component {
       if (result.status === true) {
         this.notify("Add detail invoices sell successfully");
         this.props.onAdd(result);
+      } else if (result.status === false) {
+        this.notifyErr(result.mes);
       }
       console.log(result);
     }
@@ -312,6 +316,22 @@ class invoicesForm extends Component {
                       readonly="readonly"
                       onChange={(e) =>
                         this.setState({ voucherCode: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Customer <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text    "
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="name"
+                      readonly="readonly"
+                      value={this.state.nameCustomer}
+                      onChange={(e) =>
+                        this.setState({ nameCustomer: e.target.value })
                       }
                     />
                   </div>

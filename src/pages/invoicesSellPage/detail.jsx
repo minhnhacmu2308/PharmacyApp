@@ -34,7 +34,7 @@ class detail extends Component {
               <label for="exampleFormControlInput1">
                 Date payment:<span style={{ color: "red" }}>*</span>
               </label>
-              <p>{data.datePayment}</p>
+              <p>{data.datePayment} </p>
             </div>
           </div>
 
@@ -44,7 +44,7 @@ class detail extends Component {
                 Total payment: <span style={{ color: "red" }}>*</span>
               </label>
               <br />
-              <p>{data.totalPayment}</p>
+              <p>{data.totalPayment} VNĐ</p>
             </div>
             <div className="form-group">
               <label for="exampleFormControlInput1">

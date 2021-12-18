@@ -151,11 +151,13 @@ class index extends Component {
                         <td style={{ width: 50 }}>{value.employee?.name}</td>
                         <td style={{ width: 50 }}>{value.customer?.name}</td>
                         <td>
-                          <td style={{ width: 50 }}>{value.datePayment}</td>
+                          <td style={{ width: 50 }}>
+                            {new Date(value.datePayment).toLocaleDateString()}
+                          </td>
                         </td>
 
                         <td>{value.voucherCode}</td>
-                        <td>{value.totalPayment}</td>
+                        <td>{value.totalPayment} VNĐ</td>
                         <td>
                           <Link to={`/detail-invoices-sell/${value._id}`}>
                             Detail

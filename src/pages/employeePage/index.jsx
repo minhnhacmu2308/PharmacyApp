@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, withRouter, Redirect, Link } from "react-router-dom";
-import { getAll, getEmployee } from "../../services/employee/employee.service";
+import { getEmployee } from "../../services/employee/employee.service";
 import AddForm from "./addForm";
 import Button from "@material-ui/core/Button";
 import { ToastContainer, toast } from "react-toastify";

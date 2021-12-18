@@ -5,7 +5,9 @@ import {
   deleteMdc,
   updatePrice,
   updateQuantity,
+  convertPackage,
 } from "../../services/mdcPackagingSize/mdcPackagingSize.service.js";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MdcForm from "./mdcForm";
@@ -24,13 +26,19 @@ class index extends Component {
       price: "",
       filterName: "",
       nameMedicine: "",
+      size: "",
+      checkConvert: false,
+      packageSize: "",
+      idPackageSize: "",
+      quantity: "",
+      listMedicine: [],
     };
   }
 
   componentDidMount = async () => {
     const token = await localStorage.getItem("token");
     const result = await getAllMdc();
-    console.log(result);
+
     if (result != null) {
       this.setState({ datatable: result, isLoading: false });
     }
@@ -66,6 +74,33 @@ class index extends Component {
         datatable: this.state.datatable.filter((p) => p._id !== id),
       });
       this.notify("Delete mdc packageSize successfully");
+    }
+  };
+  onConvert = (e, value) => {
+    e.preventDefault();
+    console.log(value);
+    this.setState({
+      checkConvert: true,
+      idPackageSize: value._id,
+      packageSize: value,
+      size: value.quantity,
+    });
+  };
+  onHandleConvert = async (e) => {
+    e.preventDefault();
+    const data = {
+      idPackageSize: this.state.idPackageSize,
+      quantity: this.state.quantity,
+    };
+    const result = await convertPackage(data);
+    console.log(result);
+    if (result.status == true) {
+      const result = await getAllMdc();
+      console.log(result);
+      if (result != null) {
+        this.setState({ datatable: result, isLoading: false });
+      }
+      this.notify("Convert successfully");
     }
   };
   onSubmitProp = async (data) => {
@@ -178,11 +213,22 @@ class index extends Component {
                           <p> {value.quantity}</p>
                         </td>
                         <td>
-                          <p> {value.price}</p>
+                          <p> {value.price} VNĐ</p>
                         </td>
                         {/* <td>{value.idCard}</td> */}
 
                         <td class="text-center">
+                          {value.packageSize.name == "Hộp" ? (
+                            <button
+                              type="button"
+                              style={{ width: 100 }}
+                              class="btn btn-success"
+                              onClick={(e) => this.onConvert(e, value)}
+                            >
+                              Convert
+                            </button>
+                          ) : null}
+                          &nbsp;
                           <button
                             type="button"
                             style={{ width: 100 }}
@@ -207,6 +253,76 @@ class index extends Component {
                 )}
               </tbody>
             </table>
+            {this.state.checkConvert ? (
+              <div className="col-md-6">
+                <p>(1 hộp - 50 viên)</p>
+                <form onSubmit={(e) => this.onHandleConvert(e)}>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Package Size Name:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      readonly="readonly"
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="price"
+                      value={this.state.packageSize.packageSize.name}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      PMedicine Name:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      readonly="readonly"
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="price"
+                      value={this.state.packageSize.medicine.name}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Quantity:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="quantity"
+                      value={this.state.quantity}
+                      max={this.state.size}
+                      min="1"
+                      onChange={(e) =>
+                        this.setState({ quantity: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <button
+                      style={{ width: "90px" }}
+                      type="submit"
+                      class="btn btn-danger"
+                      onClick={() => this.setState({ checkConvert: false })}
+                    >
+                      Cancel
+                    </button>
+                    &nbsp;
+                    <button
+                      style={{ width: "90px" }}
+                      type="submit"
+                      class="btn btn-success"
+                      //   onClick={() => this.onSubmit()}
+                    >
+                      Convert
+                    </button>
+                  </div>
+                </form>
+              </div>
+            ) : null}
+
             <MdcForm
               mdc={this.state.editing}
               onSubmit={this.onSubmit}

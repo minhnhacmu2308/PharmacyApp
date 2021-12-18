@@ -24,3 +24,7 @@ export const updatePrice = async (payload) => {
   const response = await axios.post(`${URL}/admin/mdc/updatePrice`, payload);
   return response.data;
 };
+export const convertPackage = async (payload) => {
+  const response = await axios.post(`${URL}/admin/mdc/convert`, payload);
+  return response.data;
+};

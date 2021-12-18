@@ -2,7 +2,7 @@ import axios from "axios";
 
 const URL = "https://pharmacy-server-app.herokuapp.com";
 
-export const getAllInvoices = async () => {
+export const getAllInvoicesBuy = async () => {
   const response = await axios.get(`${URL}/admin/invoices-buy/list`);
   return response.data;
 };
@@ -31,6 +31,14 @@ export const deleteInvoicesBuy = async (payload) => {
 export const getInvoicesBuy = async (id) => {
   const response = await axios.get(
     `${URL}/admin/invoices-buy/get-invoices?id=${id}`
+  );
+  return response.data;
+};
+
+//detail
+export const getInvoicesBuyMonth = async (month, year) => {
+  const response = await axios.get(
+    `${URL}/admin/invoices-buy/get-statistical-month?month=${month}&year=${year}`
   );
   return response.data;
 };

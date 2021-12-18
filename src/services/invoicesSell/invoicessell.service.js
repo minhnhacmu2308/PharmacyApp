@@ -42,3 +42,11 @@ export const getInvoicesSell = async (id) => {
   );
   return response.data;
 };
+
+//detail
+export const getInvoicesSellMonth = async (month, year) => {
+  const response = await axios.get(
+    `${URL}/admin/invoices-sell/get-statistical-month?month=${month}&year=${year}`
+  );
+  return response.data;
+};

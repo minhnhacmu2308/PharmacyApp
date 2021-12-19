@@ -20,7 +20,7 @@ class detail extends Component {
     var { data } = this.state;
     return (
       <div className="" style={{ padding: 20 }}>
-        <h1 className="mt-4">Detail Invoices Buy</h1>
+        <h1 className="mt-4">Detail Invoices Sell</h1>
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
@@ -28,6 +28,12 @@ class detail extends Component {
                 Name Employee: <span style={{ color: "red" }}>*</span>
               </label>
               <p>{data.employee?.name}</p>
+            </div>
+            <div className="form-group">
+              <label for="exampleFormControlInput1">
+                Name Customer: <span style={{ color: "red" }}>*</span>
+              </label>
+              <p>{data.customer?.name}</p>
             </div>
 
             <div className="form-group">
@@ -112,7 +118,7 @@ class detail extends Component {
                             </td>
 
                             <td width="50">{value.quantity}</td>
-                            <td width="50">{value.price}</td>
+                            <td width="50">{value.price} VNĐ</td>
                           </tr>
                         );
                       })

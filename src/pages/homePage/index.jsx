@@ -53,7 +53,7 @@ class home extends Component {
   render() {
     var loginUser = localStorage.getItem("token");
     if (loginUser === null) {
-      return <Redirect to="/login" />;
+      return <Redirect to="/" />;
     }
     return (
       <main>

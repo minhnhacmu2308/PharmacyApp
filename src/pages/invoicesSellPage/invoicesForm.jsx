@@ -51,7 +51,7 @@ class invoicesForm extends Component {
     this.setState({ information: user, token: token });
   };
   componentWillReceiveProps = async (nextProps) => {
-    console.log(nextProps.editing._id);
+    console.log(nextProps.editing);
     if (nextProps && nextProps.editing._id != undefined) {
       const token = await localStorage.getItem("token");
       this.setState({ token: token });
@@ -78,7 +78,7 @@ class invoicesForm extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
     var { datePayment, voucherCode } = this.state;
-    if (datePayment == "" || voucherCode == "") {
+    if (datePayment == "") {
       this.notifyErr("You need fill out information");
     } else {
       const data = {
@@ -335,7 +335,7 @@ class invoicesForm extends Component {
                       }
                     />
                   </div>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label for="exampleFormControlInput1">
                       Price:<span style={{ color: "red" }}>*</span>
                     </label>
@@ -347,7 +347,7 @@ class invoicesForm extends Component {
                       value={this.state.price}
                       onChange={(e) => this.setState({ price: e.target.value })}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <div class="modal-footer">
@@ -405,14 +405,14 @@ class invoicesForm extends Component {
                     <select
                       className="form-control"
                       id="exampleFormControlInput1"
-                      placeholder="Customer"
+                      placeholder="Prescription"
                       value={this.state.idPrescription}
                       onChange={(e) =>
                         this.setState({ idPrescription: e.target.value })
                       }
                     >
                       <option value="" default selected>
-                        Choose customer
+                        Choose prescription
                       </option>
                       {this.state.listPre.map((value, index) => {
                         return (

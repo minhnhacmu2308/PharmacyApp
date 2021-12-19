@@ -128,9 +128,7 @@ class index extends Component {
                     <th class="text-center" width="300px">
                       List Medicines
                     </th>
-                    <th class="text-center" width="60px">
-                      Status
-                    </th>
+
                     <th width="250px" class="text-center">
                       Status Action
                     </th>
@@ -192,14 +190,6 @@ class index extends Component {
                             {value.medicines?.map((item) => {
                               return <p>{item.name}</p>;
                             })}
-                          </td>
-
-                          <td class="text-center">
-                            {value.status == 1 ? (
-                              <span class="label label-success">active</span>
-                            ) : (
-                              <span class="label label-danger">unactive</span>
-                            )}
                           </td>
                           <td class="text-center">
                             <button

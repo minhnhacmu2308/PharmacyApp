@@ -30,10 +30,10 @@ class App extends Component {
     return (
       <Router history={createBrowserHistory()}>
         <Switch>
-          <Login exact path="/login" />
+          <Login exact path="/" />
           {/* <FullLayout exact path="/login" component={LoginPage} />
         <FullLayout exact path="/register" component={RegisterPage} /> */}
-          <DefaultLayout exact path="/" component={HomePage} />
+          <DefaultLayout exact path="/home" component={HomePage} />
           <DefaultLayout exact path="/package" component={PackagePage} />
           <DefaultLayout exact path="/employee" component={EmployeePage} />
           <DefaultLayout exact path="/medicine" component={MedicinePage} />

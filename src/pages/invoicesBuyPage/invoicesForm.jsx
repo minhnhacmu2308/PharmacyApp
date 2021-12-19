@@ -61,7 +61,7 @@ class invoicesForm extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
     var { datePayment, discount } = this.state;
-    if (datePayment == "" || discount == "") {
+    if (datePayment == "") {
       this.notifyErr("You need fill out information");
     } else {
       const data = {

@@ -53,28 +53,28 @@ class detail extends Component {
               <p>{data.discount}</p>
             </div>
           </div>
-
-          <div className="col-md-12">
-            <div className="card mb-4">
-              <table class="table table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th class="text-center">STT</th>
-                    <th class="text-center" width="100px">
-                      Package Size
-                    </th>
-                    <th class="text-center" style={{ width: 100 }}>
-                      Medicine Name
-                    </th>
-                    {/* <th class="text-center">IdCard</th> */}
-                    <th class="text-center">Quantity</th>
-                    <th width="400px" class="text-center">
-                      Price
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* <tr>
+          {data.detail?.length > 0 ? (
+            <div className="col-md-12">
+              <div className="card mb-4">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th class="text-center">STT</th>
+                      <th class="text-center" width="100px">
+                        Package Size
+                      </th>
+                      <th class="text-center" style={{ width: 100 }}>
+                        Medicine Name
+                      </th>
+                      {/* <th class="text-center">IdCard</th> */}
+                      <th class="text-center">Quantity</th>
+                      <th width="400px" class="text-center">
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* <tr>
                   <td></td>
                   <td>
                     <input type="text" class="form-control" />
@@ -88,36 +88,39 @@ class detail extends Component {
                   </td>
                   <td></td>
                 </tr> */}
-                  {this.state.isLoading ? (
-                    <tr>
-                      <div>
-                        <ReactLoading
-                          color="primary"
-                          height={"70%"}
-                          width={"70%"}
-                        />
-                      </div>
-                    </tr>
-                  ) : (
-                    data.detail?.map((value, index) => {
-                      return (
-                        <tr key={index}>
-                          <td width="50">{index + 1}</td>
-                          <td width="200" style={{ width: 50 }}>
-                            {value.packageSize?.name}
-                          </td>
-                          <td style={{ width: 50 }}>{value.medicine?.name}</td>
+                    {this.state.isLoading ? (
+                      <tr>
+                        <div>
+                          <ReactLoading
+                            color="primary"
+                            height={"70%"}
+                            width={"70%"}
+                          />
+                        </div>
+                      </tr>
+                    ) : (
+                      data.detail?.map((value, index) => {
+                        return (
+                          <tr key={index}>
+                            <td width="50">{index + 1}</td>
+                            <td width="200" style={{ width: 50 }}>
+                              {value.packageSize?.name}
+                            </td>
+                            <td style={{ width: 50 }}>
+                              {value.medicine?.name}
+                            </td>
 
-                          <td width="50">{value.quantity}</td>
-                          <td width="50">{value.price}</td>
-                        </tr>
-                      );
-                    })
-                  )}
-                </tbody>
-              </table>
+                            <td width="50">{value.quantity}</td>
+                            <td width="50">{value.price} VNĐ</td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       </div>
     );

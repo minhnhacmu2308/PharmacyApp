@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Route, withRouter, Redirect, Link } from "react-router-dom";
-import {
-  getAll,
-  deleteGroup,
-} from "../../services/groupMdc/groupMdc.service";
+import { getAll, deleteGroup } from "../../services/groupMdc/groupMdc.service";
 import PackageForm from "./groupForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -90,14 +87,15 @@ class index extends Component {
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th class="text-center">STT</th>
+                    <th width="50px" class="text-center">
+                      STT
+                    </th>
                     <th class="text-center" width="100px">
                       Name
                     </th>
                     <th class="text-center" width="100px">
                       Description
                     </th>
-                    <th class="text-center">Status</th>
                     <th width="500px" class="text-center">
                       Status Action
                     </th>
@@ -135,13 +133,7 @@ class index extends Component {
                           <td>{index + 1}</td>
                           <td style={{ width: 50 }}>{value.name}</td>
                           <td style={{ width: 150 }}>{value.description}</td>
-                          <td class="text-center">
-                            {value.status == 1 ? (
-                              <span class="label label-success">active</span>
-                            ) : (
-                              <span class="label label-danger">unactive</span>
-                            )}
-                          </td>
+
                           <td class="text-center">
                             <button
                               type="button"
@@ -151,7 +143,7 @@ class index extends Component {
                             >
                               Edit
                             </button>
-                            
+
                             <button
                               onClick={() => this.onLock(value._id)}
                               type="button"
@@ -161,7 +153,6 @@ class index extends Component {
                             >
                               Delete
                             </button>
-                           
                           </td>
                         </tr>
                       );

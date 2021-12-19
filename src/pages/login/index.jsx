@@ -42,7 +42,7 @@ class login extends Component {
   render() {
     var loginUser = localStorage.getItem("token");
     if (loginUser !== null) {
-      return <Redirect to="/" />;
+      return <Redirect to="/home" />;
     }
     return (
       <body className="bg-primary">

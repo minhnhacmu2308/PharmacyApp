@@ -205,19 +205,23 @@ class index extends Component {
                   datatable.map((value, index) => {
                     return (
                       <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td style={{ width: 50 }}>{value.packageSize.name}</td>
+                        <td style={{ width: "50px" }} class="text-right">
+                          {index + 1}
+                        </td>
+                        <td class="text-right" style={{ width: 50 }}>
+                          {value.packageSize.name}
+                        </td>
 
-                        <td>{value.medicine.name}</td>
-                        <td>
+                        <td class="text-right">{value.medicine.name}</td>
+                        <td class="text-right">
                           <p> {value.quantity}</p>
                         </td>
-                        <td>
+                        <td class="text-right">
                           <p> {value.price} VNĐ</p>
                         </td>
                         {/* <td>{value.idCard}</td> */}
 
-                        <td class="text-center">
+                        <td class="text-right">
                           {value.packageSize.name == "Hộp" ? (
                             <button
                               type="button"

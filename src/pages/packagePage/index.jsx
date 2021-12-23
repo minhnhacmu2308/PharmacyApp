@@ -90,14 +90,11 @@ class index extends Component {
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th class="text-center">STT</th>
-                    <th class="text-center" width="100px">
+                    <th class="text-right">STT</th>
+                    <th class="text-right" width="100px">
                       Name
                     </th>
-                    <th class="text-center">Status</th>
-                    <th width="500px" class="text-center">
-                      Status Action
-                    </th>
+                    <th class="text-right">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -129,16 +126,14 @@ class index extends Component {
                     this.state.datatable.map((value, index) => {
                       return (
                         <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td style={{ width: 50 }}>{value.name}</td>
-                          <td class="text-center">
-                            {value.status == 1 ? (
-                              <span class="label label-success">active</span>
-                            ) : (
-                              <span class="label label-danger">unactive</span>
-                            )}
+                          <td style={{ width: "50px" }} class="text-right">
+                            {index + 1}
                           </td>
-                          <td class="text-center">
+                          <td class="text-right" style={{ width: 500 }}>
+                            {value.name}
+                          </td>
+
+                          <td class="text-right">
                             <button
                               type="button"
                               style={{ width: 100 }}

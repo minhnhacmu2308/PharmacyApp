@@ -89,22 +89,22 @@ class index extends Component {
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th class="text-center">STT</th>
-                  <th class="text-center" width="100px">
+                  <th class="text-right">STT</th>
+                  <th class="text-right" width="100px">
                     Name Employee
                   </th>
-                  <th class="text-center" width="400px" style={{ width: 200 }}>
+                  <th class="text-right" width="400px" style={{ width: 200 }}>
                     Date payment
                   </th>
-                  {/* <th class="text-center">IdCard</th> */}
-                  <th class="text-center">Discount</th>
-                  <th width="400px" class="text-center">
+                  {/* <th class="text-right">IdCard</th> */}
+                  <th class="text-right">Discount</th>
+                  <th width="400px" class="text-right">
                     Total payment
                   </th>
-                  <th width="400px" class="text-center">
+                  <th width="400px" class="text-right">
                     Detail
                   </th>
-                  <th width="500px" class="text-center">
+                  <th width="500px" class="text-right">
                     Status Action
                   </th>
                 </tr>
@@ -138,32 +138,39 @@ class index extends Component {
                   this.state.datatable.map((value, index) => {
                     return (
                       <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td style={{ width: 50 }}>{value.employee?.name}</td>
-                        <td>
-                          <td style={{ width: 50 }}>
+                        <td class="text-right">{index + 1}</td>
+                        <td class="text-right" style={{ width: 500 }}>
+                          {value.employee?.name}
+                        </td>
+                        <td class="text-right">
+                          <td class="text-right" style={{ width: 500 }}>
                             {new Date(value.datePayment).toLocaleDateString()}
                           </td>
                         </td>
 
-                        <td>{value.discount}</td>
-                        <td>{value.totalPayment} VNĐ</td>
-                        <td>
+                        <td class="text-right">{value.discount} %</td>
+                        <td class="text-right">
+                          {value.totalPayment}
+                          {value.totalPayment ? " VNĐ" : "-"}
+                        </td>
+                        <td class="text-right">
                           <Link to={`/detail-invoices/${value._id}`}>
                             Detail
                           </Link>
                         </td>
                         {/* <td>{value.idCard}</td> */}
 
-                        <td class="text-center">
-                          <button
-                            type="button"
-                            style={{ width: 100 }}
-                            class="btn btn-success"
-                            onClick={() => this.onUpdate(value._id)}
-                          >
-                            Add
-                          </button>
+                        <td class="text-right">
+                          {value.status == 0 ? (
+                            <button
+                              type="button"
+                              style={{ width: 100 }}
+                              class="btn btn-success"
+                              onClick={() => this.onUpdate(value._id)}
+                            >
+                              Add
+                            </button>
+                          ) : null}
                           &nbsp;
                           <button
                             type="button"

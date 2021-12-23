@@ -27,6 +27,14 @@ export const addPrescription = async (payload) => {
   return response.data;
 };
 
+export const confirmSell = async (payload) => {
+  const response = await axios.post(
+    `${URL}/admin/invoices-sell/confirm-sell`,
+    payload
+  );
+  return response.data;
+};
+
 export const deleteInvoicesSell = async (payload) => {
   const response = await axios.post(
     `${URL}/admin/invoices-sell/delete`,

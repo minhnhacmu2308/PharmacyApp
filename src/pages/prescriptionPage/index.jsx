@@ -29,6 +29,7 @@ class index extends Component {
   componentDidMount = async () => {
     const token = await localStorage.getItem("token");
     const result = await getAll();
+    console.log("a", result);
 
     if (result != null) {
       this.setState({
@@ -55,6 +56,17 @@ class index extends Component {
       this.setState({ datatable: datatable });
     }
   };
+  onAdd = async (data) => {
+    var datatable = this.state.datatable;
+    console.log(data);
+    if (data.status == true) {
+      var index = await this.findIndex(data.data._id);
+      console.log(index);
+      datatable[index] = data.data;
+      this.setState({ datatable: datatable });
+    }
+  };
+
   onDelete = async (id) => {
     const data = {
       secret_key: this.state.token,
@@ -126,7 +138,7 @@ class index extends Component {
                       DosageMethod
                     </th>
                     <th class="text-center" width="300px">
-                      List Medicines
+                      List Medicines Package Size
                     </th>
 
                     <th width="250px" class="text-center">
@@ -188,17 +200,23 @@ class index extends Component {
                           <td style={{ width: 150 }}>{value.dosageMethod}</td>
                           <td>
                             {value.medicines?.map((item) => {
-                              return <p>{item.name}</p>;
+                              return (
+                                <p>
+                                  {item.mdcPackageSize?.medicine?.name} -
+                                  {item.mdcPackageSize?.packageSize?.name} (SL:
+                                  {item.quantity})
+                                </p>
+                              );
                             })}
                           </td>
                           <td class="text-center">
                             <button
                               type="button"
                               style={{ width: 100 }}
-                              class="btn btn-warning"
+                              class="btn btn-success"
                               onClick={() => this.onUpdate(value._id)}
                             >
-                              Edit
+                              Add
                             </button>
 
                             <button
@@ -221,6 +239,7 @@ class index extends Component {
                 <PackageForm
                   editing={this.state.editing}
                   onSubmit={this.onSubmit}
+                  onAdd={this.onAdd}
                 />
               }
             </div>

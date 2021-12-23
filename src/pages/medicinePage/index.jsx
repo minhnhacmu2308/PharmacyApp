@@ -54,7 +54,6 @@ class index extends Component {
     console.log(index);
     datatable[index] = data;
     this.setState({ datatable: datatable });
-    
   };
   onDelete = async (id) => {
     const data = {
@@ -100,19 +99,19 @@ class index extends Component {
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th class="text-center">STT</th>
-                  <th class="text-center" width="100px">
+                  <th class="text-right">STT</th>
+                  <th class="text-right" width="100px">
                     Name
                   </th>
-                  <th class="text-center" style={{ width: 100 }}>
+                  <th class="text-right" style={{ width: 100 }}>
                     Image
                   </th>
                   {/* <th class="text-center">IdCard</th> */}
-                  <th class="text-center">origin</th>
-                  <th width="400px" class="text-center">
+                  <th class="text-right">origin</th>
+                  <th width="400px" class="text-right">
                     GroupMedicines Name
                   </th>
-                  <th width="400px" class="text-center">
+                  <th width="400px" class="text-right">
                     Detail
                   </th>
                   <th width="500px" class="text-center">
@@ -149,22 +148,26 @@ class index extends Component {
                   this.state.datatable.map((value, index) => {
                     return (
                       <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td style={{ width: 50 }}>{value.name}</td>
-                        <td>
+                        <td style={{ width: "50px" }} class="text-right">
+                          {index + 1}
+                        </td>
+                        <td class="text-right" style={{ width: 500 }}>
+                          {value.name}
+                        </td>
+                        <td class="text-right">
                           <img width="150" height="150" src={value.image} />
                         </td>
 
-                        <td>{value.origin}</td>
-                        <td>{value.groupMedicines.name}</td>
-                        <td>
+                        <td class="text-right">{value.origin}</td>
+                        <td class="text-right">{value.groupMedicines.name}</td>
+                        <td style={{ width: 40 }} class="text-right">
                           <Link to={`/detail-medicine/${value._id}`}>
                             Detail
                           </Link>
                         </td>
                         {/* <td>{value.idCard}</td> */}
 
-                        <td class="text-center">
+                        <td class="text-right">
                           <button
                             type="button"
                             style={{ width: 100 }}

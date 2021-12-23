@@ -19,6 +19,10 @@ export const deletePrescription = async (payload) => {
   return response.data;
 };
 
+export const addDetailPrescription = async (payload) => {
+  const response = await axios.post(`${URL}/admin/pre/add-detail`, payload);
+  return response.data;
+};
 //detail
 export const getPrescription = async (id) => {
   const response = await axios.get(

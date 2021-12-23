@@ -11,6 +11,14 @@ export const add = async (payload) => {
   return response.data;
 };
 
+export const confirmBuy = async (payload) => {
+  const response = await axios.post(
+    `${URL}/admin/invoices-buy/confirm-buy`,
+    payload
+  );
+  return response.data;
+};
+
 export const addDetail = async (payload) => {
   const response = await axios.post(
     `${URL}/admin/invoices-buy/add-detail`,

@@ -12,6 +12,7 @@ import { getCustomer } from "../../services/employee/employee.service.js";
 import { getAll } from "../../services/prescription/prescription.service.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactLoading from "react-loading";
 
 class invoicesForm extends Component {
   constructor(props) {
@@ -34,6 +35,11 @@ class invoicesForm extends Component {
       checkPrescription: "",
       idPrescription: "",
       nameCustomer: "",
+      symptom: "",
+      dosageMethod: "",
+      numberSold: 0,
+      disease: "",
+      datatable1: [],
     };
   }
   componentDidMount = async () => {
@@ -45,6 +51,7 @@ class invoicesForm extends Component {
       listMdcPackage: listMdcPackage,
       listCustomer: listCustomer.data,
       listPre: listPre,
+      datatable1: listPre,
     });
     const token = await localStorage.getItem("token");
     const user = jwt(token);
@@ -60,6 +67,7 @@ class invoicesForm extends Component {
         datePayment: nextProps.editing.datePayment,
         voucherCode: nextProps.editing.voucherCode,
         nameCustomer: nextProps.editing.customer?.name,
+        price: nextProps.editing.price,
       });
     }
   };
@@ -135,6 +143,23 @@ class invoicesForm extends Component {
     }
   };
   render() {
+    var { datatable1 } = this.state;
+    var { datatable, disease, symptom, dosageMethod } = this.state;
+    if (disease) {
+      datatable1 = datatable1.filter((x) => {
+        return x.disease.toLowerCase().indexOf(disease) !== -1;
+      });
+    }
+    if (symptom) {
+      datatable1 = datatable1.filter((x) => {
+        return x.symptom.toLowerCase().indexOf(symptom) !== -1;
+      });
+    }
+    if (dosageMethod) {
+      datatable1 = datatable1.filter((x) => {
+        return x.dosageMethod.toLowerCase().indexOf(dosageMethod) !== -1;
+      });
+    }
     return (
       <div>
         <div className="card-header">
@@ -335,19 +360,6 @@ class invoicesForm extends Component {
                       }
                     />
                   </div>
-                  {/* <div className="form-group">
-                    <label for="exampleFormControlInput1">
-                      Price:<span style={{ color: "red" }}>*</span>
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="exampleFormControlInput1"
-                      placeholder="Price"
-                      value={this.state.price}
-                      onChange={(e) => this.setState({ price: e.target.value })}
-                    />
-                  </div> */}
                 </div>
 
                 <div class="modal-footer">
@@ -386,7 +398,98 @@ class invoicesForm extends Component {
           )}
         </div>
         {this.state.id !== "" ? (
-          <h4 style={{ marginLeft: 10 }}>Add prescription</h4>
+          <div className="card mb-4">
+            <h4 style={{ marginLeft: 10 }}>Add prescription</h4>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th style={{ width: 50 }} class="text-center">
+                    STT
+                  </th>
+                  <th class="text-center" width="100px">
+                    Disease
+                  </th>
+                  <th class="text-center" width="100px">
+                    Symptom
+                  </th>
+                  <th class="text-center" width="100px">
+                    DosageMethod
+                  </th>
+                  <th class="text-center" width="300px">
+                    List Medicines Package Size
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>
+                    <input
+                      type="text"
+                      value={this.state.disease}
+                      onChange={(e) =>
+                        this.setState({ disease: e.target.value })
+                      }
+                      class="form-control"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={this.state.symptom}
+                      onChange={(e) =>
+                        this.setState({ symptom: e.target.value })
+                      }
+                      class="form-control"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={this.state.dosageMethod}
+                      onChange={(e) =>
+                        this.setState({ dosageMethod: e.target.value })
+                      }
+                      class="form-control"
+                    />
+                  </td>
+                </tr>
+                {this.state.isLoading ? (
+                  <tr>
+                    <div>
+                      <ReactLoading
+                        color="primary"
+                        height={"10%"}
+                        width={"10%"}
+                      />
+                    </div>
+                  </tr>
+                ) : (
+                  datatable1.map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        <td style={{ width: 10 }}>{index + 1}</td>
+                        <td style={{ width: 50 }}>{value.disease}</td>
+                        <td style={{ width: 50 }}>{value.symptom}</td>
+                        <td style={{ width: 150 }}>{value.dosageMethod}</td>
+                        <td>
+                          {value.medicines?.map((item) => {
+                            return (
+                              <p>
+                                {item.mdcPackageSize?.medicine?.name} -
+                                {item.mdcPackageSize?.packageSize?.name} (SL:
+                                {item.quantity})
+                              </p>
+                            );
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
         ) : null}
         <div className="card-header">
           {this.state.id !== "" ? (
@@ -417,9 +520,8 @@ class invoicesForm extends Component {
                       {this.state.listPre.map((value, index) => {
                         return (
                           <option key={index} value={value._id}>
-                            {value.medicines?.map((value1, index1) => {
-                              return value1.name + " - ";
-                            })}
+                            {value.disease} - {value.symptom} -
+                            {value.dosageMethod}
                           </option>
                         );
                       })}

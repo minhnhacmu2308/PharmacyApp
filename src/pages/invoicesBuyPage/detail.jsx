@@ -1,25 +1,45 @@
 import React, { Component } from "react";
-import { getInvoicesBuy } from "../../services/invoicesBuy/invoicesbuy.service.js";
+import {
+  getInvoicesBuy,
+  confirmBuy,
+} from "../../services/invoicesBuy/invoicesbuy.service.js";
 import ReactLoading from "react-loading";
 import { Route, withRouter, Redirect, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class detail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: {},
+      id: "",
     };
   }
   componentDidMount = async () => {
     console.log(this.props.match.params.id);
     const result = await getInvoicesBuy(this.props.match.params.id);
     console.log(result);
-    this.setState({ data: result });
+    this.setState({ data: result, id: this.props.match.params.id });
+  };
+  notify = (text) => toast.success(text);
+  notifyErr = (text) => toast.error(text);
+  onConfirm = async (e) => {
+    e.preventDefault();
+    const data = {
+      idInvoicesBuy: this.props.match.params.id,
+    };
+    const result = await confirmBuy(data);
+    this.notify("Confirm  successfully");
+    const result1 = await getInvoicesBuy(this.state.id);
+    console.log(result);
+    this.setState({ data: result1 });
   };
   render() {
     var { data } = this.state;
     return (
       <div className="" style={{ padding: 20 }}>
+        <ToastContainer />
         <h1 className="mt-4">Detail Invoices Buy</h1>
         <div className="row">
           <div className="col-md-6">
@@ -34,7 +54,7 @@ class detail extends Component {
               <label for="exampleFormControlInput1">
                 Date payment:<span style={{ color: "red" }}>*</span>
               </label>
-              <p>{data.datePayment}</p>
+              <p>{new Date(data.datePayment).toLocaleDateString()}</p>
             </div>
           </div>
 
@@ -50,7 +70,7 @@ class detail extends Component {
               <label for="exampleFormControlInput1">
                 Discount: <span style={{ color: "red" }}>*</span>
               </label>
-              <p>{data.discount}</p>
+              <p>{data.discount} %</p>
             </div>
           </div>
           {data.detail?.length > 0 ? (
@@ -122,6 +142,16 @@ class detail extends Component {
             </div>
           ) : null}
         </div>
+        {data.status == 0 ? (
+          <button
+            type="button"
+            style={{ width: 100 }}
+            class="btn btn-success"
+            onClick={(e) => this.onConfirm(e)}
+          >
+            Completed
+          </button>
+        ) : null}
       </div>
     );
   }

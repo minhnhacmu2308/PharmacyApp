@@ -87,16 +87,16 @@ class index extends Component {
               <table class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th width="50px" class="text-center">
+                    <th width="50px" class="text-right">
                       STT
                     </th>
-                    <th class="text-center" width="100px">
+                    <th class="text-right" width="100px">
                       Name
                     </th>
-                    <th class="text-center" width="100px">
+                    <th class="text-right" width="100px">
                       Description
                     </th>
-                    <th width="500px" class="text-center">
+                    <th width="10px" class="text-right">
                       Status Action
                     </th>
                   </tr>
@@ -130,11 +130,21 @@ class index extends Component {
                     this.state.datatable.map((value, index) => {
                       return (
                         <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td style={{ width: 50 }}>{value.name}</td>
-                          <td style={{ width: 150 }}>{value.description}</td>
+                          <td
+                            class="text-right"
+                            width="10px"
+                            style={{ width: 50 }}
+                          >
+                            {index + 1}
+                          </td>
+                          <td class="text-right" style={{ width: 50 }}>
+                            {value.name}
+                          </td>
+                          <td class="text-right" style={{ width: 150 }}>
+                            {value.description}
+                          </td>
 
-                          <td class="text-center">
+                          <td class="text-right">
                             <button
                               type="button"
                               style={{ width: 100 }}

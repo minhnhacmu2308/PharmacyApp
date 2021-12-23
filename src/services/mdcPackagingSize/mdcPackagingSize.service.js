@@ -20,6 +20,11 @@ export const updateQuantity = async (payload) => {
   return response.data;
 };
 
+export const getMdcByIdMedicine = async (payload) => {
+  const response = await axios.post(`${URL}/admin/mdc/getMdc-id`, payload);
+  return response.data;
+};
+
 export const updatePrice = async (payload) => {
   const response = await axios.post(`${URL}/admin/mdc/updatePrice`, payload);
   return response.data;

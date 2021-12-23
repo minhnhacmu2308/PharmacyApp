@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { getAllMedicine } from "../../services/medicine/medicine.service";
-import { add, update } from "../../services/prescription/prescription.service";
+import { getAllMdc } from "../../services/mdcPackagingSize/mdcPackagingSize.service";
+import {
+  add,
+  update,
+  addDetailPrescription,
+} from "../../services/prescription/prescription.service";
 
 class prescriptionForm extends Component {
   constructor(props) {
@@ -15,10 +20,12 @@ class prescriptionForm extends Component {
       token: "",
       listMedicine: [],
       idMedicine: [],
+      quantity: "",
     };
   }
   componentDidMount = async () => {
-    const listMedicine = await getAllMedicine();
+    const listMedicine = await getAllMdc();
+    console.log("dsds", listMedicine);
     this.setState({
       listMedicine: listMedicine,
     });
@@ -52,12 +59,7 @@ class prescriptionForm extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
     var { dosageMethod, symptom, disease, idMedicine } = this.state;
-    if (
-      dosageMethod === "" ||
-      symptom === "" ||
-      disease === "" ||
-      idMedicine.length === 0
-    ) {
+    if (dosageMethod === "" || symptom === "" || disease === "") {
       this.notifyErr("You need fill out information");
     } else {
       const data = {
@@ -68,6 +70,7 @@ class prescriptionForm extends Component {
         status: 1,
         medicines: this.state.idMedicine,
       };
+      console.log(data);
       const result = await add(data);
       console.log(result);
       if (result.success == true) {
@@ -87,21 +90,22 @@ class prescriptionForm extends Component {
       dosageMethod === "" ||
       symptom === "" ||
       disease === "" ||
-      idMedicine.length === 0
+      idMedicine === ""
     ) {
       this.notifyErr("You need fill out information");
     } else {
       const data = {
-        secret_key: this.state.token,
         idPre: this.state.id,
-        disease: this.state.disease,
-        symptom: this.state.symptom,
-        dosageMethod: this.state.dosageMethod,
-        arrMedicine: this.state.idMedicine,
+        idPackageSize: this.state.idMedicine,
+        quantity: this.state.quantity,
       };
-      const result = await update(data);
+      const result = await addDetailPrescription(data);
       console.log("Dsds", result);
-      this.props.onSubmit(result);
+      if (result.status === true) {
+        this.notify("Add medicine package size successfully");
+        this.props.onAdd(result);
+      }
+      // this.props.onSubmit(result);
     }
   };
   handleChange = (e) => {
@@ -119,105 +123,211 @@ class prescriptionForm extends Component {
             }
           >
             <div className="row">
-              <div className="col-md-12">
-                <div className="form-group">
-                  <label for="exampleFormControlInput1">
-                    Disease:<span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Disease"
-                    value={this.state.disease}
-                    onChange={(e) => this.setState({ disease: e.target.value })}
-                  />
+              {this.state.id === "" ? (
+                <div className="col-md-12">
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Disease:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Disease"
+                      value={this.state.disease}
+                      onChange={(e) =>
+                        this.setState({ disease: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Symptom:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Symptom"
+                      value={this.state.symptom}
+                      onChange={(e) =>
+                        this.setState({ symptom: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      DosageMethod:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Symptom"
+                      value={this.state.dosageMethod}
+                      onChange={(e) =>
+                        this.setState({ dosageMethod: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div class="modal-footer">
+                    {this.state.id !== "" ? (
+                      <button
+                        style={{ width: "90px" }}
+                        type="button"
+                        class="btn btn-danger"
+                        onClick={() => this.onClear()}
+                      >
+                        Cancel
+                      </button>
+                    ) : null}
+                    {this.state.id === "" ? (
+                      <button
+                        style={{ width: "90px" }}
+                        type="submit"
+                        class="btn btn-success"
+                        //   onClick={() => this.onSubmit()}
+                      >
+                        Add
+                      </button>
+                    ) : (
+                      <button
+                        style={{ width: "90px" }}
+                        type="submit"
+                        class="btn btn-success"
+                        //   onClick={() => this.onSubmit()}
+                      >
+                        Save
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label for="exampleFormControlInput1">
-                    Symptom:<span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Symptom"
-                    value={this.state.symptom}
-                    onChange={(e) => this.setState({ symptom: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label for="exampleFormControlInput1">
-                    DosageMethod:<span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="DosageMethod"
-                    value={this.state.dosageMethod}
-                    onChange={(e) =>
-                      this.setState({ dosageMethod: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label for="exampleFormControlInput1">
-                    Choose medicine:
-                    <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <select
-                    multiple={true}
-                    className="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Customer"
-                    value={this.state.idMedicine}
-                    onChange={(e) => this.handleChange(e)}
-                  >
-                    <option value="" default selected>
-                      Choose medicine
-                    </option>
-                    {this.state.listMedicine?.map((value, index) => {
-                      return (
-                        <option key={index} value={value._id}>
-                          {value.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <div class="modal-footer">
-                  {this.state.id !== "" ? (
-                    <button
-                      style={{ width: "90px" }}
-                      type="button"
-                      class="btn btn-danger"
-                      onClick={() => this.onClear()}
+              ) : (
+                <div className="col-md-12">
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Disease:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Disease"
+                      readonly="readonly"
+                      value={this.state.disease}
+                      onChange={(e) =>
+                        this.setState({ disease: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Symptom:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Symptom"
+                      readonly="readonly"
+                      value={this.state.symptom}
+                      onChange={(e) =>
+                        this.setState({ symptom: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      DosageMethod:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Symptom"
+                      readonly="readonly"
+                      value={this.state.dosageMethod}
+                      onChange={(e) =>
+                        this.setState({ symptom: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Choose medicine:
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <select
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Customer"
+                      value={this.state.idMedicine}
+                      onChange={(e) =>
+                        this.setState({ idMedicine: e.target.value })
+                      }
                     >
-                      Cancel
-                    </button>
-                  ) : null}
-                  {this.state.id === "" ? (
-                    <button
-                      style={{ width: "90px" }}
-                      type="submit"
-                      class="btn btn-success"
-                      //   onClick={() => this.onSubmit()}
-                    >
-                      Add
-                    </button>
-                  ) : (
-                    <button
-                      style={{ width: "90px" }}
-                      type="submit"
-                      class="btn btn-success"
-                      //   onClick={() => this.onSubmit()}
-                    >
-                      Save
-                    </button>
-                  )}
+                      <option value="" default selected>
+                        Choose medicine
+                      </option>
+                      {this.state.listMedicine?.map((value, index) => {
+                        return (
+                          <option key={index} value={value._id}>
+                            {value.medicine?.name} - {value.packageSize?.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Quantity:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Quantity"
+                      value={this.state.quantity}
+                      onChange={(e) =>
+                        this.setState({ quantity: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div class="modal-footer">
+                    {this.state.id !== "" ? (
+                      <button
+                        style={{ width: "90px" }}
+                        type="button"
+                        class="btn btn-danger"
+                        onClick={() => this.onClear()}
+                      >
+                        Cancel
+                      </button>
+                    ) : null}
+                    {this.state.id === "" ? (
+                      <button
+                        style={{ width: "90px" }}
+                        type="submit"
+                        class="btn btn-success"
+                        //   onClick={() => this.onSubmit()}
+                      >
+                        Add
+                      </button>
+                    ) : (
+                      <button
+                        style={{ width: "90px" }}
+                        type="submit"
+                        class="btn btn-success"
+                        //   onClick={() => this.onSubmit()}
+                      >
+                        Save
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </form>
         </div>

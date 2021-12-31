@@ -197,6 +197,7 @@ class invoicesForm extends Component {
 
   onAdd2 = async (e, value) => {
     e.preventDefault();
+
     let obj = true;
 
     for (let i = 0; i < value.medicines.length; i++) {
@@ -207,6 +208,8 @@ class invoicesForm extends Component {
         }
       }
       if (obj) {
+        var noteString = this.state.note + value.dosageMethod + ",";
+        this.setState({ note: noteString });
         value.medicines[i].mdcPackageSize.quantity = 1;
         await this.state.arr1.push(value.medicines[i]?.mdcPackageSize);
       }

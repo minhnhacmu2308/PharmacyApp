@@ -10,6 +10,10 @@ export const add = async (payload) => {
   const response = await axios.post(`${URL}/admin/invoices-sell/add`, payload);
   return response.data;
 };
+export const add1 = async (payload) => {
+  const response = await axios.post(`${URL}/admin/invoices-sell/add1`, payload);
+  return response.data;
+};
 
 export const addDetail = async (payload) => {
   const response = await axios.post(

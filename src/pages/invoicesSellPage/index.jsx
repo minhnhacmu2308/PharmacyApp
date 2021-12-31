@@ -51,7 +51,7 @@ class index extends Component {
     var datatable = this.state.datatable;
     console.log(data);
     if (data.success == true) {
-      this.notify("Create invoices buy successfully");
+      this.notify("Create invoices sell successfully");
       this.setState({ datatable: [...datatable, data.data] });
     }
   };
@@ -65,6 +65,7 @@ class index extends Component {
       this.setState({ datatable: datatable });
     }
   };
+
   findIndex = (id) => {
     var { datatable } = this.state;
     var result = -1;
@@ -85,6 +86,7 @@ class index extends Component {
     console.log(this.state.datatable[index]);
     this.setState({ pre: this.state.datatable[index] });
   };
+
   render() {
     return (
       <main>
@@ -175,17 +177,6 @@ class index extends Component {
                         {/* <td>{value.idCard}</td> */}
 
                         <td class="text-right">
-                          {value.status == 0 ? (
-                            <button
-                              type="button"
-                              style={{ width: 100 }}
-                              class="btn btn-success"
-                              onClick={() => this.onUpdate(value._id)}
-                            >
-                              Add
-                            </button>
-                          ) : null}
-                          &nbsp;
                           <button
                             type="button"
                             class="btn btn-danger"

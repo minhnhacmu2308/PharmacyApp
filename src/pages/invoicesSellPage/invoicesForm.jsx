@@ -4,6 +4,7 @@ import {
   getAllInvoices,
   deleteInvoicesSell,
   add,
+  add1,
   addDetail,
   addPrescription,
 } from "../../services/invoicesSell/invoicessell.service.js";
@@ -12,6 +13,7 @@ import { getCustomer } from "../../services/employee/employee.service.js";
 import { getAll } from "../../services/prescription/prescription.service.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CKEditor from "react-ckeditor-component";
 import ReactLoading from "react-loading";
 
 class invoicesForm extends Component {
@@ -40,6 +42,10 @@ class invoicesForm extends Component {
       numberSold: 0,
       disease: "",
       datatable1: [],
+      filterName: "",
+      nameMedicine: "",
+      arr1: [],
+      note: "",
     };
   }
   componentDidMount = async () => {
@@ -85,8 +91,8 @@ class invoicesForm extends Component {
   };
   onSubmit = async (e) => {
     e.preventDefault();
-    var { datePayment, voucherCode } = this.state;
-    if (datePayment == "") {
+    var { datePayment, voucherCode, arr1, note } = this.state;
+    if (datePayment == "" || note == "" || arr1.length == 0) {
       this.notifyErr("You need fill out information");
     } else {
       const data = {
@@ -94,8 +100,11 @@ class invoicesForm extends Component {
         idCustomer: this.state.idCustomer,
         datePayment: this.state.datePayment,
         voucherCode: this.state.voucherCode,
+        arrPackages: this.state.arr1,
+        note: this.state.note,
       };
-      const result = await add(data);
+      console.log(data);
+      const result = await add1(data);
       console.log(result);
       this.props.onSubmit(result);
     }
@@ -142,6 +151,70 @@ class invoicesForm extends Component {
       console.log(result);
     }
   };
+
+  onAdd1 = async (e, value) => {
+    e.preventDefault();
+    let obj = true;
+    for (let i = 0; i < this.state.arr1.length; i++) {
+      if (this.state.arr1[i]._id === value._id) {
+        obj = false;
+        this.state.arr1[i].quantity = this.state.arr1[i].quantity + 1;
+      }
+    }
+    console.log(obj);
+    if (obj) {
+      console.log(value);
+      value.quantity = 1;
+      await this.state.arr1.push(value);
+    }
+    this.setState({ arr1: this.state.arr1 });
+    console.log(this.state.arr1);
+  };
+  onChange = (evt) => {
+    var newContent = evt.editor.getData();
+    this.setState({
+      note: newContent,
+    });
+  };
+  onBlur(evt) {
+    console.log("onBlur event called with event info: ", evt);
+  }
+
+  afterPaste(evt) {
+    console.log("afterPaste event called with event info: ", evt);
+  }
+  updateContent = (newContent) => {
+    this.setState({
+      description: newContent,
+    });
+  };
+  onDelete1 = async (e, id) => {
+    e.preventDefault();
+    this.setState({
+      arr1: this.state.arr1.filter((p) => p._id !== id),
+    });
+  };
+
+  onAdd2 = async (e, value) => {
+    e.preventDefault();
+    let obj = true;
+
+    for (let i = 0; i < value.medicines.length; i++) {
+      for (let j = 0; j < this.state.arr1.length; j++) {
+        if (this.state.arr1[j]._id === value.medicines[i]?.mdcPackageSize._id) {
+          obj = false;
+          this.state.arr1[j].quantity = this.state.arr1[j]?.quantity + 1;
+        }
+      }
+      if (obj) {
+        value.medicines[i].mdcPackageSize.quantity = 1;
+        await this.state.arr1.push(value.medicines[i]?.mdcPackageSize);
+      }
+    }
+    this.setState({ arr1: this.state.arr1 });
+    console.log(this.state.arr1);
+  };
+
   render() {
     var { datatable1 } = this.state;
     var { datatable, disease, symptom, dosageMethod } = this.state;
@@ -158,6 +231,17 @@ class invoicesForm extends Component {
     if (dosageMethod) {
       datatable1 = datatable1.filter((x) => {
         return x.dosageMethod.toLowerCase().indexOf(dosageMethod) !== -1;
+      });
+    }
+    var { listMdcPackage, filterName, nameMedicine } = this.state;
+    if (filterName) {
+      listMdcPackage = listMdcPackage.filter((x) => {
+        return x.packageSize.name.toLowerCase().indexOf(filterName) !== -1;
+      });
+    }
+    if (nameMedicine) {
+      listMdcPackage = listMdcPackage.filter((x) => {
+        return x.medicine.name.toLowerCase().indexOf(nameMedicine) !== -1;
       });
     }
     return (
@@ -230,8 +314,85 @@ class invoicesForm extends Component {
                       }
                     />
                   </div>
+                  <div className="form-group">
+                    <label for="exampleFormControlInput1">
+                      Note:<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <CKEditor
+                      activeClass="editor"
+                      content={this.state.note}
+                      events={{
+                        blur: this.onBlur,
+                        afterPaste: this.afterPaste,
+                        change: this.onChange,
+                      }}
+                    />
+                  </div>
                 </div>
+                <div className="card mb-4">
+                  <h5>List package size choosed</h5>
+                  {this.state.arr1.length == 0 ? (
+                    <p style={{ color: "red" }}>List is blank</p>
+                  ) : (
+                    <table class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th class="text-center">STT</th>
+                          <th style={{ width: 350 }} class="text-center">
+                            PackageSize Name
+                          </th>
+                          <th style={{ width: 350 }} class="text-center">
+                            Medicine Name
+                          </th>
+                          {/* <th class="text-center">IdCard</th> */}
+                          <th style={{ width: 100 }} class="text-center">
+                            Quantity
+                          </th>
+                          <th style={{ width: 100 }} class="text-center">
+                            Price
+                          </th>
+                          <th style={{ width: 100 }} class="text-center">
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.arr1.map((value, index) => {
+                          return (
+                            <tr key={index}>
+                              <td style={{ width: "50px" }} class="text-right">
+                                {index + 1}
+                              </td>
+                              <td class="text-right" style={{ width: 50 }}>
+                                {value.packageSize.name}
+                              </td>
 
+                              <td class="text-right">{value.medicine.name}</td>
+                              <td class="text-right">
+                                <p> {value.quantity}</p>
+                              </td>
+                              <td class="text-right">
+                                <p> {value.price} VNĐ</p>
+                              </td>
+                              {/* <td>{value.idCard}</td> */}
+
+                              <td class="text-right">
+                                <button
+                                  type="button"
+                                  style={{ width: 100 }}
+                                  class="btn btn-danger"
+                                  onClick={(e) => this.onDelete1(e, value._id)}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
                 <div class="modal-footer">
                   {this.state.id !== "" ? (
                     <button
@@ -248,7 +409,7 @@ class invoicesForm extends Component {
                       style={{ width: "90px" }}
                       type="submit"
                       class="btn btn-success"
-                      //   onClick={() => this.onSubmit()}
+                      // onClick={() => this.onSubmit()}
                     >
                       Create
                     </button>
@@ -262,6 +423,192 @@ class invoicesForm extends Component {
                       Save
                     </button>
                   )}
+                </div>
+                <div className="card mb-4">
+                  <h5>List package size</h5>
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th class="text-center">STT</th>
+                        <th style={{ width: 350 }} class="text-center">
+                          PackageSize Name
+                        </th>
+                        <th style={{ width: 350 }} class="text-center">
+                          Medicine Name
+                        </th>
+                        {/* <th class="text-center">IdCard</th> */}
+                        <th style={{ width: 100 }} class="text-center">
+                          Price
+                        </th>
+                        <th style={{ width: 100 }} class="text-center">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <input
+                            type="text"
+                            value={this.state.filterName}
+                            onChange={(e) =>
+                              this.setState({ filterName: e.target.value })
+                            }
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            value={this.state.nameMedicine}
+                            onChange={(e) =>
+                              this.setState({ nameMedicine: e.target.value })
+                            }
+                            class="form-control"
+                          />
+                        </td>
+                      </tr>
+                      {listMdcPackage.map((value, index) => {
+                        return (
+                          <tr key={index}>
+                            <td style={{ width: "50px" }} class="text-right">
+                              {index + 1}
+                            </td>
+                            <td class="text-right" style={{ width: 50 }}>
+                              {value.packageSize.name}
+                            </td>
+
+                            <td class="text-right">{value.medicine.name}</td>
+
+                            <td class="text-right">
+                              <p> {value.price} VNĐ</p>
+                            </td>
+                            {/* <td>{value.idCard}</td> */}
+
+                            <td class="text-right">
+                              <button
+                                type="button"
+                                style={{ width: 100 }}
+                                class="btn btn-success"
+                                onClick={(e) => this.onAdd1(e, value)}
+                              >
+                                Add
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="card mb-4">
+                  <h4 style={{ marginLeft: 10 }}>List prescription</h4>
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th style={{ width: 50 }} class="text-center">
+                          STT
+                        </th>
+                        <th class="text-center" width="100px">
+                          Disease
+                        </th>
+                        <th class="text-center" width="100px">
+                          Symptom
+                        </th>
+                        <th class="text-center" width="100px">
+                          DosageMethod
+                        </th>
+                        <th class="text-center" width="300px">
+                          List Medicines Package Size
+                        </th>
+                        <th class="text-center" style={{ width: 100 }}>
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <input
+                            type="text"
+                            value={this.state.disease}
+                            onChange={(e) =>
+                              this.setState({ disease: e.target.value })
+                            }
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            value={this.state.symptom}
+                            onChange={(e) =>
+                              this.setState({ symptom: e.target.value })
+                            }
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            value={this.state.dosageMethod}
+                            onChange={(e) =>
+                              this.setState({ dosageMethod: e.target.value })
+                            }
+                            class="form-control"
+                          />
+                        </td>
+                      </tr>
+                      {this.state.isLoading ? (
+                        <tr>
+                          <div>
+                            <ReactLoading
+                              color="primary"
+                              height={"10%"}
+                              width={"10%"}
+                            />
+                          </div>
+                        </tr>
+                      ) : (
+                        datatable1.map((value, index) => {
+                          return (
+                            <tr key={index}>
+                              <td style={{ width: 10 }}>{index + 1}</td>
+                              <td style={{ width: 50 }}>{value.disease}</td>
+                              <td style={{ width: 50 }}>{value.symptom}</td>
+                              <td style={{ width: 150 }}>
+                                {value.dosageMethod}
+                              </td>
+                              <td>
+                                {value.medicines?.map((item) => {
+                                  return (
+                                    <p>
+                                      {item.mdcPackageSize?.medicine?.name} -
+                                      {item.mdcPackageSize?.packageSize?.name}{" "}
+                                      {/* (SL:
+                                      {item.quantity}) */}
+                                    </p>
+                                  );
+                                })}
+                              </td>
+                              <td class="text-right">
+                                <button
+                                  type="button"
+                                  style={{ width: 100 }}
+                                  class="btn btn-success"
+                                  onClick={(e) => this.onAdd2(e, value)}
+                                >
+                                  Add
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </form>

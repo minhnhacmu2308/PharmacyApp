@@ -77,6 +77,12 @@ class detail extends Component {
               </label>
               <p>{data.voucherCode} %</p>
             </div>
+            <div className="form-group">
+              <label for="exampleFormControlInput1">
+                Note: <span style={{ color: "red" }}>*</span>
+              </label>
+              <div dangerouslySetInnerHTML={{ __html: data.note }} />
+            </div>
           </div>
           {data.detail?.length > 0 ? (
             <div className="col-md-12">
